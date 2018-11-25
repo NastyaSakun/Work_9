@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,14 +18,18 @@ namespace Work9
             windows.Upgrade += Show_Message;
             windows.Method_W();
 
-            String_ string_ = new String_();
-            string_.DeleteEv+=Delete;
-            string_.DelPEv += DelP;
-            string_.AddEv += Add;
-            string_.ReplaceEv += Replace;
 
-            string_.Add("nast_t!  ;lolkek.");
-            Console.WriteLine(string_.ToString());
+            String_ string_ = new String_();
+            string_.DeleteEv += string_.Delete;
+            string_.DelPEv += string_.DelP;
+            string_.InsertEv += string_.Insert;
+            string_.ReplaceEv += string_.Replace;
+            string_.AllFunc += string_.Delete;
+            string_.AllFunc += string_.DelP;
+            string_.AllFunc += string_.Insert;
+            string_.AllFunc += string_.Replace;
+            string_.Add("nast_t! ;lolkek. chebyrek");
+            Console.WriteLine(string_.AllFunc.Invoke());
 
 
 
@@ -38,30 +42,8 @@ namespace Work9
                 Console.WriteLine(message);
             }
 
-        public static void Delete(string user)
-        {
-            user.Replace(',', '_');
-            user.Replace('.', '_');
-            user.Replace(';', '_');
-            user.Replace(':', '_');
-            user.Replace('!', '_');
-            user.Replace('?', '_');
-        }
 
-        public static void Add(string user)
-        {
-            user.Insert(2, "_");
-        }
-
-        public static void Replace(string user)
-        {
-            user.ToUpper();
-        }
-
-        public static void DelP(string user)
-        {
-            user.Replace(' ', '_');
-        }
+       
 
 
         class User
@@ -84,37 +66,43 @@ namespace Work9
 
         class String_
         {
-            public event Action<string> DeleteEv;
-            public event Action<string> AddEv;
-            public event Action<string> ReplaceEv;
-            public event Action<string> DelPEv;
+            public Func<string> DeleteEv;
+            public Func<string> InsertEv;
+            public Func<string> ReplaceEv;
+            public Func<string> DelPEv;
+            public Func<string> AllFunc;
 
+            private string _name;
 
-            public void Delete(string user)
+            public string Delete()
             {
-                DeleteEv?.Invoke(user);
+                return _name=_name.Replace(',', '_').Replace('.', '_').Replace(';', '_').Replace(':', '_').Replace('!', '_').Replace('?', '_');
             }
 
             public void Add(string user)
             {
-                AddEv?.Invoke(user);
+                _name = user;
             }
 
-            public void Replace(string user)
+            public string Insert()
             {
-                ReplaceEv?.Invoke(user);
+                return _name=_name.Insert(2, "+");
             }
 
-            public void DelP(string user)
+            public string Replace()
             {
-                DelPEv?.Invoke(user);
+               return _name.ToUpper();
             }
 
-            
-           // public override string ToString()
-            //{
-              //  return .ToString();
-            //}
+            public string DelP()
+            {
+                return _name=_name.Replace(' ', '_');
+            }
+
+            public override string ToString()
+            {
+                return this._name;
+            }
         }
 
 
